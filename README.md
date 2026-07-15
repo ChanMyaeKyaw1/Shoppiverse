@@ -1,5 +1,5 @@
 ```markdown
-### POS System (POS_project_final)
+# POS System (POS_project_final)
 
 A professional Point of Sale (POS) system built with the Laravel PHP framework, featuring robust inventory management, transaction tracking, and sales analytics.
 
