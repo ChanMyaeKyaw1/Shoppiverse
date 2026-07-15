@@ -38,4 +38,16 @@ Route::group( [ 'prefix' => 'user', 'middleware' => 'userMiddleware'], function(
     Route::post('order', [UserController::class, 'order'])->name('user#order');
     Route::get('orderList', [UserController::class, 'orderList'])->name('user#orderList');
 
+    // Contact Page routes
+    Route::get('contact', [UserController::class, 'contactPage'])->name('user#contactPage');
+    Route::post('contact/send', [UserController::class, 'contactSend'])->name('user#contactSend');
+
+    // User Profile & Password Management
+    Route::get('profile/edit', [UserController::class, 'userEditProfile'])->name('user#editProfile');
+    Route::get('profile/changePassword', [UserController::class, 'userChangePasswordPage'])->name('user#changePasswordPage');
+    Route::post('profile/update', [UserController::class, 'userUpdateProfile'])->name('user#updateProfile');
+    Route::post('profile/changePassword/update', [UserController::class, 'userUpdatePassword'])->name('user#updatePassword');
+
+    // Footer -> Subscribe
+    Route::post('subscribe', [UserController::class, 'subscribe'])->name('user#subscribe');
 } );

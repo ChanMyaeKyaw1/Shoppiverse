@@ -11,139 +11,103 @@
     {{-- custom css for rating --}}
     <link rel="stylesheet" href="{{ asset('user/css/custom.css') }}">
 
-    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
     <link href="{{ asset('user/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('user/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
-
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('user/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
     <link href="{{ asset('user/css/style.css') }}" rel="stylesheet">
-
-    {{-- <link rel="{{ asset('user/stylesheet') }}" href="css/custom.css"> --}}
-
-    <!-- Template Stylesheet -->
-    {{-- <link href="{{ asset('user/css/style.css') }}" rel="stylesheet"> --}}
-
-    <!-- Custom Stylesheet -->
-    {{-- <link rel="stylesheet" href="{{ asset('user/css/custom.css') }}"> --}}
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{ asset('user/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="{{ asset('user/css/style.css') }}" rel="stylesheet">
-
-    <link rel="{{ asset('user/stylesheet') }}" href="css/custom.css">
-
-
 </head>
 
 <body>
 
-    <!-- Navbar start -->
     <div class="container-fluid fixed-top">
-
         <div class="container px-0">
             <nav class="navbar navbar-light bg-white navbar-expand-xl">
                 <a href="#" class="navbar-brand">
                     <h1 class="text-primary display-6">Shoppiverse</h1>
                 </a>
-                <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
+                <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars text-primary"></span>
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
-                        <a href="{{ route('user#homePage') }}" class="nav-item nav-link ">Shop</a>
+                        <a href="{{ route('user#homePage') }}" class="nav-item nav-link">Shop</a>
                         <a href="{{ route('user#cart') }}" class="nav-item nav-link">Cart</a>
-                        {{-- <a href="#" class="nav-item nav-link">Contact</a> --}}
-
+                        <a href="{{ route('user#contactPage') }}" class="nav-item nav-link">Contact Us</a>
                     </div>
                     <div class="d-flex m-3 me-0">
-
                         <a href="{{ route('user#cart') }}" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            {{-- <i class="fa-solid fa-cart-shopping fa-2x"></i> --}}
                         </a>
                         <a href="{{ route('user#orderList') }}" class="position-relative me-4 my-auto">
                             <i class="fa-solid fa-list-check fa-2x"></i>
                         </a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle my-auto mt-2" data-bs-toggle="dropdown">
-                                <img src="{{ asset(Auth::user()->profile == null ? 'picForDefault/adminProfile.webp' :
-                                'profile/' .Auth::user()->profile) }}" style="width: 50px" class="img-profile  rounded-circle" alt="">
+                                <img src="{{ asset(Auth::user()->profile == null ? 'picForDefault/adminProfile.webp' : 'profile/' . Auth::user()->profile) }}" style="width: 50px" class="img-profile rounded-circle" alt="">
                                 <span>{{ Auth::user()->name != null ? Auth::user()->name : Auth::user()->nickname }}</span>
                             </a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                {{-- <a href="{{ route('profile#edit') }}" class="dropdown-item my-2">Edit Profile</a>
-                                <a href="{{ route('profile#changePasswordPage') }}" class="dropdown-item my-2">Change Password</a> --}}
+                                <a href="{{ route('user#editProfile') }}" class="dropdown-item my-2">Edit Profile</a>
+                                <a href="{{ route('user#changePasswordPage') }}" class="dropdown-item my-2">Change Password</a>
                                 <a href="#" class="dropdown-item my-2">
                                     <form action="{{ route('logout') }}" method="post">
                                         @csrf
-                                        <input type="submit" value="Logout"
-                                            class="btn btn-outline-success rounded w-100 mb-3">
+                                        <input type="submit" value="Logout" class="btn btn-outline-success rounded w-100 mb-3">
                                     </form>
                                 </a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </nav>
         </div>
     </div>
-    <!-- Navbar End -->
-
     @yield('content')
 
     @include('sweetalert::alert')
 
-    <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
         <div class="container py-5">
-            <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
-                <div class="row g-4">
+            <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.3);">
+                <div class="row g-4 align-items-center">
                     <div class="col-lg-3">
-                        <a href="#">
-                            <h1 class="text-primary mb-0">Shoppiverse</h1>
-                            <p class="text-secondary mb-0">Fresh products</p>
+                        <a href="{{ route('user#homePage') }}" class="text-decoration-none">
+                            <h1 class="text-primary mb-0 fw-bold">Shoppiverse</h1>
+                            <p class="text-secondary mb-0 small">Fresh products</p>
                         </a>
                     </div>
                     <div class="col-lg-6">
-                        <div class="position-relative mx-auto">
-                            <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="number"
-                                placeholder="Your Email">
+                        <form action="{{ route('user#subscribe') }}" method="POST" class="position-relative mx-auto">
+                            @csrf
+                            <input class="form-control border-0 w-100 py-3 px-4 rounded-pill bg-white text-dark"
+                                   type="email"
+                                   name="subscriber_email"
+                                   placeholder="Your Email Address"
+                                   required>
                             <button type="submit"
-                                class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white"
-                                style="top: 0; right: 0;">Subscribe Now</button>
-                        </div>
+                                    class="btn btn-primary border-0 py-3 px-4 position-absolute rounded-pill text-white fw-bold"
+                                    style="top: 0; right: 0; height: 100%;">
+                                Subscribe Now
+                            </button>
+                        </form>
                     </div>
                     <div class="col-lg-3">
-                        <div class="d-flex justify-content-end pt-3">
-                            <a href="www.twitter.com" class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i
-                                    class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i
-                                    class="fab fa-youtube"></i></a>
-                            <a class="btn btn-outline-secondary btn-md-square rounded-circle" href=""><i
-                                    class="fab fa-linkedin-in"></i></a>
+                        <div class="d-flex justify-content-lg-end justify-content-start pt-2 gap-2">
+                            <a href="https://www.facebook.com" target="_blank" class="btn btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center custom-social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://t.me//charmedChan" target="_blank" class="btn btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center custom-social-icon"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="https://github.com/ChanMyaeKyaw1" target="_blank" class="btn btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center custom-social-icon"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/chan-myae-kyaw-054105288" target="_blank" class="btn btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center custom-social-icon"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                 </div>
@@ -151,76 +115,57 @@
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-item">
-                        <h4 class="text-light mb-3">Why People Like us!</h4>
-                        <p class="mb-4">Easy to use our website and We deliver only fresh products with fair price.</p>
-                        <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Read More</a>
+                        <h4 class="text-light mb-3 fw-bold">Why People Like us!</h4>
+                        <p class="mb-4 text-white-50">Easy to use our website and We deliver only fresh products with fair price.</p>
+                        <a href="{{ route('user#homePage') }}" class="btn btn-sm btn-outline-primary py-2 px-4 rounded-0 text-uppercase fw-bold text-white">Shop Now</a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="d-flex flex-column text-start footer-item">
-                        <h4 class="text-light mb-3">Shop Info</h4>
-                        <a class="btn-link" href="">About Us</a>
-                        <a class="btn-link" href="">Contact Us</a>
-                        <a class="btn-link" href="">Privacy Policy</a>
-                        <a class="btn-link" href="">Terms & Condition</a>
-                        <a class="btn-link" href="">Return Policy</a>
-                        <a class="btn-link" href="">FAQs & Help</a>
+                        <h4 class="text-light mb-3 fw-bold">Shop Info</h4>
+                        <a class="btn-link text-decoration-none" href="#">About Us</a>
+                        <a class="btn-link text-decoration-none" href="{{ route('user#contactPage') }}">Contact Us</a>
+                        <a class="btn-link text-decoration-none" href="#">Privacy Policy</a>
+                        <a class="btn-link text-decoration-none" href="#">Terms & Condition</a>
+                        <a class="btn-link text-decoration-none" href="#">Return Policy</a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="d-flex flex-column text-start footer-item">
-                        <h4 class="text-light mb-3">Account</h4>
-                        <a class="btn-link" href="">My Account</a>
-                        <a class="btn-link" href="">Shop details</a>
-                        <a class="btn-link" href="{{ route('user#cart') }}">Shopping Cart</a>
-                        <a class="btn-link" href="">Wishlist</a>
-                        <a class="btn-link" href="{{ route('user#orderList') }}">Order History</a>
-                        <a class="btn-link" href="">International Orders</a>
+                        <h4 class="text-light mb-3 fw-bold">Account</h4>
+                        <a class="btn-link text-decoration-none" href="{{ route('user#editProfile') }}">My Profile</a>
+                        <a class="btn-link text-decoration-none" href="{{ route('user#homePage') }}">Shop Details</a>
+                        <a class="btn-link text-decoration-none" href="{{ route('user#cart') }}">Shopping Cart</a>
+                        <a class="btn-link text-decoration-none" href="{{ route('user#orderList') }}">Order History</a>
+                        <a class="btn-link text-decoration-none" href="{{ route('user#changePasswordPage') }}">Security Settings</a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-item">
-                        <h4 class="text-light mb-3">Contact</h4>
-                        <p>Address: Mingalardon, Yangon, Myanmar</p>
-                        <p>Email: chanmyaekyaw.charm@gmail.com</p>
-                        <p>Phone: +959 975 897 338</p>
-                        <p>Payment Accepted</p>
-                        <img src="img/paymentsMethod.png" class="img-fluid" alt="">
+                        <h4 class="text-light mb-3 fw-bold">Contact</h4>
+                        <p class="mb-2 text-white-50"><i class="fas fa-map-marker-alt text-primary me-2"></i> Address: Mingalardon, Yangon, Myanmar</p>
+                        <p class="mb-2 text-white-50"><i class="fas fa-envelope text-primary me-2"></i> Email: chanmyaekyaw.charm@gmail.com</p>
+                        <p class="mb-3 text-white-50"><i class="fas fa-phone text-primary me-2"></i> Phone: +959 975 897 338</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Footer End -->
-
-    <!-- Copyright Start -->
-    <div class="container-fluid copyright bg-dark py-4">
+    <div class="container-fluid bg-dark border-top border-secondary py-4">
         <div class="container">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    {{-- <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site
-                            Name</a>, All right reserved.</span> --}}
+                    <span class="text-white-50 small">
+                        &copy; {{ date('Y') }} <a href="{{ route('user#homePage') }}" class="text-primary text-decoration-none fw-bold">Shoppiverse</a>. All Rights Reserved.
+                    </span>
                 </div>
-                <div class="col-md-6 my-auto text-center text-md-end text-white">
-                    <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                    <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                    <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                    {{-- Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a
-                        class="border-bottom" href="https://themewagon.com">ThemeWagon</a> --}}
+                <div class="col-md-6 text-center text-md-end text-white-50 small">
+                    Handcrafted for fresh quality deliveries.
                 </div>
             </div>
         </div>
     </div>
-    <!-- Copyright End -->
-
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
-            class="fa fa-arrow-up"></i></a>
-
-
-    <!-- JavaScript Libraries -->
+    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -234,8 +179,9 @@
     {{-- sweet alert cdn link --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="{{ asset('user/js/main.js') }}"></script>
+    {{-- <script src="{{ asset('user/js/main.js') }}"></script> --}}
 
     @yield('js-script')
 
+</body>
 </html>

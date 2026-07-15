@@ -6,18 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
-        Schema::table('payments', function (Blueprint $table) {
-            $table->string('note')->nullable();
-        });
+        // 🟩 Only add the column if it does not exist yet
+        if (Schema::hasTable('payments') && !Schema::hasColumn('payments', 'note')) {
+            Schema::table('payments', function (Blueprint $table) {
+                $table->string('note')->nullable();
+            });
+        }
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
-        Schema::table('payments', function (Blueprint $table) {
-            $table->dropColumn('note');
-        });
+        // 🟩 Only drop the column if it exists
+        if (Schema::hasColumn('payments', 'note')) {
+            Schema::table('payments', function (Blueprint $table) {
+                $table->dropColumn('note');
+            });
+        }
     }
-
 };

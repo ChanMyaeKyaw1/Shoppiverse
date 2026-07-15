@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Cart;
-use App\Models\Order;
-use App\Models\Rating;
-use App\Models\Comment;
-use App\Models\Payment;
-use App\Models\Product;
-use App\Models\Category;
-use Illuminate\Http\Request;
-use App\Models\PaymentHistory;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Contact;
+use App\Models\Order;
+use App\Models\Payment;
+use App\Models\PaymentHistory;
+use App\Models\Product;
+use App\Models\Rating;
+use App\Models\Subscriber;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -264,4 +267,123 @@ class UserController extends Controller
 
         return view('user.orderList', compact('orderList'));
     }
+
+    // Direct to Contact Page
+    public function contactPage() {
+        return view('user.contact'); // references resources/views/user/contact.blade.php
+    }
+
+    // Handle Contact Feedback submission
+        public function contactSend(Request $request)
+        {
+            // Validate the incoming form inputs
+            $request->validate([
+                'contactTitle'   => 'required|string|max:255',
+                'contactMessage' => 'required|string',
+            ]);
+
+            // Insert into the database. Laravel automatically populates created_at and updated_at!
+            Contact::create([
+                'user_id' => Auth::id(),
+                'title'   => $request->contactTitle,
+                'message' => $request->contactMessage,
+            ]);
+
+        Alert::success('Message Delivered!', 'Your message has been successfully recorded.');
+
+        return back();
+    }
+
+    // Direct to User Edit Profile Page
+    public function userEditProfile() {
+        $user = Auth::user();
+        return view('user.profile.edit', compact('user'));
+    }
+
+    // Handle User Profile Update
+    public function userUpdateProfile(Request $request) {
+        // Validate incoming request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'phone' => 'nullable|string',
+            'address' => 'nullable|string',
+            'image' => 'nullable|mimes:jpg,jpeg,png|max:2048', // 2MB Max
+        ]);
+
+        $user = \App\Models\User::find(Auth::id());
+
+        // Update text values
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+
+        // Handle profile image upload (using the input name 'image' to match your form)
+        if ($request->hasFile('image')) {
+            // Optional: Delete old profile image if it exists to save storage space
+            if ($user->profile && file_exists(public_path('profile/' . $user->profile))) {
+                @unlink(public_path('profile/' . $user->profile));
+            }
+
+            $fileName = uniqid() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('profile'), $fileName);
+            $user->profile = $fileName;
+        }
+
+        $user->save();
+        Alert::success('Profile Updated', 'Your profile details have been saved.');
+        return back();
+    }
+
+    // Direct to User Change Password Page
+    public function userChangePasswordPage() {
+        return view('user.profile.changePassword');
+    }
+
+    // Handle User Password Change Update
+    public function userUpdatePassword(Request $request) {
+        $request->validate([
+            'oldPassword' => 'required',
+            'newPassword' => 'required|min:6|confirmed', // Needs 'newPassword_confirmation' field in view
+        ]);
+
+        $user = \App\Models\User::find(Auth::id());
+
+        if (Hash::check($request->oldPassword, $user->password)) {
+            $user->password = Hash::make($request->newPassword);
+            $user->save();
+            Alert::success('Password Changed', 'Your password was successfully updated.');
+            return back();
+        }
+
+        return back()->withErrors(['oldPassword' => 'The old password does not match our records.']);
+    }
+
+    // Subscribe
+    public function subscribe(Request $request)
+    {
+        // 1. Validate the input and check if it already exists in the subscribers table
+        $request->validate([
+            'subscriber_email' => 'required|email'
+        ]);
+
+        // 2. Check if the email is already subscribed
+        $exists = Subscriber::where('email', $request->subscriber_email)->exists();
+
+        if ($exists) {
+            Alert::info('Already Subscribed!', 'This email is already registered to our newsletter.');
+            return back();
+        }
+
+        // 3. Save the email to the database (Laravel automatically logs created_at/updated_at timestamps)
+        Subscriber::create([
+            'email' => $request->subscriber_email
+        ]);
+
+        Alert::success('Subscribed!', 'Thank you for joining our newsletter.');
+
+        return back();
+    }
+
 }

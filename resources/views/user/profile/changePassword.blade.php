@@ -1,9 +1,12 @@
-{{-- @extends('user/layouts/master')
+@extends('user/layouts/master')
 
 @section('content')
 
     <!-- Begin Page Content -->
-    <div class="container-fluid">
+        <div class="container" style="margin-top: 140px; margin-bottom: 60px;">
+            <div class="row justify-content-center">
+            </div>
+        </div>
 
         <!-- Page Heading -->
         <div class="">
@@ -12,39 +15,32 @@
                     <div class="card">
                         <div class="card-body shadow">
 
-                            <form action="" method="post" class="p-3 rounded">
+                            <form action="{{ route('user#updatePassword') }}" method="POST">
                                 @csrf
+
                                 <div class="mb-3">
                                     <label class="form-label">Old Password</label>
-                                    <input type="password" name="oldPassword" value="{{ old('oldPassword') }}" class="form-control @error('oldPassword') is-invalid @enderror"
-                                        placeholder="Enter Old Password...">
+                                    <input class="form-control @error('oldPassword') is-invalid @enderror" type="password" name="oldPassword" placeholder="Enter Old Password..." required>
                                     @error('oldPassword')
-                                        <small class="invalid-feedback">{{ $message }}</small>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">New Password</label>
-                                    <input type="password" name="newPassword" value="{{ old('newPassword') }}" class="form-control @error('newPassword') is-invalid @enderror "
-                                        placeholder="Enter New Password...">
+                                    <input class="form-control @error('newPassword') is-invalid @enderror" type="password" name="newPassword" placeholder="Enter New Password..." required>
                                     @error('newPassword')
-                                        <small class="invalid-feedback">{{ $message }}</small>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Confirm Password</label>
-                                    <input type="password" name="confirmPassword" value="{{ old('confirmPassword') }}" class="form-control @error('confirmPassword') is-invalid @enderror "
-                                        placeholder="Enter Confirm Password...">
-                                    @error('confirmPassword')
-                                        <small class="invalid-feedback">{{ $message }}</small>
-                                    @enderror
+                                    <input class="form-control" type="password" name="newPassword_confirmation" placeholder="Enter Confirm Password..." required>
                                 </div>
-                                <div class="">
-                                    <input type="submit" value="Change" class="btn bg-dark text-white">
-                                </div>
-                            </form>
 
+                                <button type="submit" class="btn btn-dark rounded-50 px-2.5 py-1.5">Change</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -53,4 +49,4 @@
 
     </div>
 
-@endsection --}}
+@endsection

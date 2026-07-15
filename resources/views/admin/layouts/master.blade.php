@@ -11,51 +11,71 @@
 
     <title>Admin - Dashboard</title>
 
-    {{-- <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet"> --}}
-
-    <!-- Custom fonts for this template-->
     <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     {{-- font awesome version 6 upgrade link --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <!-- Custom styles for this template-->
     <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     {{-- bootstrap --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
 
+    <style>
+        /* Smooth styling transitions */
+        .topbar {
+            box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.05) !important;
+            /* 🟩 REMOVE THE HUGE ROUNDED EDGES ON THE NAV BAR CONTAINER */
+            border-radius: 0 !important;
+        }
+
+        /* Force the navbar element itself to be square */
+        nav.navbar.topbar {
+            border-radius: 0 !important;
+        }
+
+        .dropdown-list .dropdown-header {
+            background-color: #4e73df !important;
+            border: 1px solid #4e73df !important;
+            padding-top: .75rem !important;
+            padding-bottom: .75rem !important;
+        }
+
+        .sidebar-dark .nav-item .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0 !important; /* Made this square too to match */
+            margin: 0 8px;
+            width: auto;
+        }
+
+        /* Keep dropdown menu windows, badges, and status lights sharp */
+        .dropdown-menu,
+        .dropdown-list,
+        .badge,
+        .btn,
+        .icon-circle,
+        .img-profile {
+            border-radius: 0 !important;
+        }
+    </style>
 </head>
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon">
-                    {{-- <i class="fas fa-laugh-wink"></i> --}}
-                    <i class="fa-solid fa-gauge"></i>
+                    <i class="fa-solid fa-gauge-high"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Admin Dashboard</div>
             </a>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin#dashboard')}}"><i class="fas fa-fw fa-table"></i><span>Dashboard </span></a>
             </li>
@@ -76,270 +96,178 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('payment#list') }}"><i class="fas fa-solid fa-credit-card"></i></i><span>Payment Method </span></a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('payment#list') }}"><i class="fas fa-credit-card"></i><span>Payment</span></a>
-                </li> --}}
             @endif
-
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-solid fa-list"></i><span>Sale Information </span></a>
-            </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin#orderList') }}"><i class="fas fa-solid fa-cart-shopping"></i><span>Order Board </span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('profile#changePasswordPage') }}"><i class="fas fa-solid fa-lock"></i></i></i><span>Change Password </span></a>
+                <a class="nav-link" href="{{ route('profile#changePasswordPage') }}"><i class="fas fa-solid fa-lock"></i><span>Change Password </span></a>
             </li>
 
-            <li class="nav-item">
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <li class="nav-item px-3 mb-3">
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
-                    <span class="nav-link">
-                        <button type="submit" class="btn bg-dark text-white">
-                            <i class="fas fa-solid fa-right-from-bracket"></i> Logout</button>
-                    </span>
+                    <button type="submit" class="btn btn-sm btn-danger w-100 py-2 shadow-sm">
+                        <i class="fas fa-solid fa-right-from-bracket me-2"></i> Logout
+                    </button>
                 </form>
             </li>
         </ul>
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow-sm">
 
-                    <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    {{-- <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form> --}}
-
-                    <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        {{-- <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li> --}}
-
-                        <!-- Nav Item - Alerts -->
-                        {{-- <li class="nav-item dropdown no-arrow mx-1">
+                        <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw text-gray-600"></i>
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
-                            <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
+                                <h6 class="dropdown-header font-weight-bold">
+                                    Notifications Center
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <a class="dropdown-item d-flex align-items-center py-3" href="{{ route('admin#orderList') }}">
                                     <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
+                                        <div class="icon-circle bg-primary text-white p-2 rounded-circle d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+                                            <i class="fas fa-file-invoice text-white"></i>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <div class="small text-gray-500">Just Now</div>
+                                        <span class="font-weight-bold text-gray-800">A new customer order has been placed!</span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <a class="dropdown-item d-flex align-items-center py-3" href="#">
                                     <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
+                                        <div class="icon-circle bg-warning text-white p-2 rounded-circle d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
                                             <i class="fas fa-exclamation-triangle text-white"></i>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
+                                        <div class="small text-gray-500">2 hours ago</div>
+                                        <span class="text-gray-700">Stock Alert: Certain items are running low.</span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                <a class="dropdown-item d-flex align-items-center py-3" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success text-white p-2 rounded-circle d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
+                                            <i class="fas fa-wallet text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">Today</div>
+                                        <span class="text-gray-700">Daily transaction processing settlement complete.</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500 py-2" href="#">Show All Alerts</a>
                             </div>
-                        </li> --}}
+                        </li>
 
-                        <!-- Nav Item - Messages -->
-                        {{-- <li class="nav-item dropdown no-arrow mx-1">
+                        <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw text-gray-600"></i>
+                                <span class="badge badge-danger badge-counter">2</span>
                             </a>
-                            <!-- Dropdown - Messages -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
+                                <h6 class="dropdown-header font-weight-bold">
                                     Message Center
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
+                                <a class="dropdown-item d-flex align-items-center py-3" href="#">
+                                    <div class="dropdown-list-image mr-3 position-relative">
+                                        <img class="rounded-circle" src="{{ asset('picForDefault/adminProfile.webp') }}" alt="..." style="width: 40px; height:40px;">
+                                        <div class="status-indicator bg-success position-absolute bottom-0 end-0 rounded-circle border border-white" style="width:10px; height:10px;"></div>
                                     </div>
                                     <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                        <div class="text-truncate text-gray-800">Hi there! Is the payment verification step confirmed for Order #2839?</div>
+                                        <div class="small text-gray-500">Customer Support · 45m</div>
                                     </div>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
-                                        <div class="status-indicator"></div>
+                                <a class="dropdown-item d-flex align-items-center py-3" href="#">
+                                    <div class="dropdown-list-image mr-3 position-relative">
+                                        <img class="rounded-circle" src="{{ asset('picForDefault/adminProfile.webp') }}" alt="..." style="width: 40px; height:40px;">
+                                        <div class="status-indicator bg-warning position-absolute bottom-0 end-0 rounded-circle border border-white" style="width:10px; height:10px;"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
+                                        <div class="text-truncate text-gray-700">The supplier updated items listings context for next week.</div>
+                                        <div class="small text-gray-500">Inventory Management · 3h</div>
                                     </div>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <a class="dropdown-item text-center small text-gray-500 py-2" href="#">Read More Messages</a>
                             </div>
-                        </li> --}}
+                        </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-700 font-weight-bold small">
                                     {{ Auth::user()->name != null ? Auth::user()->name : Auth::user()->nickname }}
                                 </span>
-                                <img class="img-profile rounded-circle" {{-- src="img/undraw_profile.svg"> --}}
-                                src="{{ Auth::user()->profile == null ?
-                                asset('picForDefault/adminProfile.webp') : asset('profile/'.Auth::user()->profile) }}">
+                                <img class="img-profile rounded-circle shadow-sm"
+                                src="{{ Auth::user()->profile == null ? asset('picForDefault/adminProfile.webp') : asset('profile/'.Auth::user()->profile) }}" style="width:32px; height:32px;">
                             </a>
 
-                            <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{{ route('profile#edit') }}">
+                                <a class="dropdown-item py-2" href="{{ route('profile#edit') }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    My Profile
                                 </a>
 
                                 @if (Auth()->user()->role == 'superadmin')
-                                    <a class="dropdown-item" href="{{ route('account#newAccountPage') }}">
-                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Add New Admin Account
+                                    <a class="dropdown-item py-2" href="{{ route('account#newAccountPage') }}">
+                                        <i class="fas fa-user-plus fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Add Admin Account
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('account#adminList') }}">
+                                    <a class="dropdown-item py-2" href="{{ route('account#adminList') }}">
                                         <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Admin List
+                                        Admin Registry List
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('account#userList') }}">
-                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        User List
+                                    <a class="dropdown-item py-2" href="{{ route('account#userList') }}">
+                                        <i class="fas fa-users-gear fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Customer Accounts List
                                     </a>
                                 @endif
 
-                                <a class="dropdown-item" href="{{ route('profile#changePasswordPage') }}">
-                                    <i class="fas fa-solid fa-lock fa-sm fa-fw mr-2 text-gray-400"></i></i></i>
+                                <a class="dropdown-item py-2" href="{{ route('profile#changePasswordPage') }}">
+                                    <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <span class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <div class="p-2">
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-                                        <input type="submit" class="btn btn-dark text-white w-100" value="Logout">
+                                        <button type="submit" class="btn btn-danger btn-sm text-white w-100 py-1">Logout</button>
                                     </form>
-                                </span>
+                                </div>
                             </div>
                         </li>
 
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
-
-
-    @yield('content')
+                @yield('content')
 
     {{-- for sweet alert --}}
     @include('sweetalert::alert')
 
-    <!-- Bootstrap core JavaScript-->
     <script src="{{ asset ('admin/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset ('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
@@ -347,28 +275,15 @@
     <link rel="stylesheet" href="{{ asset('user/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('user/css/bootstrap.css') }}">
 
-
     {{-- bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
     <script src="{{ asset ('admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
-    <!-- Custom scripts for all pages-->
     <script src="{{ asset ('admin/js/sb-admin-2.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    {{-- <script src="{{ asset ('admin/vendor/chart.js/Chart.min.js') }}"></script> --}}
-
-    <!-- Page level custom scripts -->
-    {{-- <script src="{{ asset ('admin/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset ('admin/js/demo/chart-pie-demo.js') }}"></script> --}}
 
     {{-- sweet alert cdn link --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    {{-- JQuery cdn link --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
 
     @yield('js-script')
 
